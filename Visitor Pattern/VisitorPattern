@@ -3,6 +3,8 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/* Code implemented By Siavash Khalaj (contactsiavash@gmail.com) */
+
 enum Color {
     RED, GREEN
 }
