@@ -17,5 +17,6 @@ public class DuplicateWords{
         while(reader.ready()){
             System.out.println(removeConsecutiveDuplicates(reader.readLine().strip()));
         }
+        reader.close();
     }
 }
