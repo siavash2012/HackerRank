@@ -3,6 +3,9 @@ import java.util.concurrent.atomic.*;
 import java.util.stream.*;
 import java.io.*;
 
+/*Code implemented by Siavash Khalaj (contactsiavash@gmail.com) */
+/*This implementation does not use Regex. Streams are used to remove consecutive duplicate words. */
+
 public class DuplicateWords{
     public static String removeConsecutiveDuplicates(String str){
         var array=str.split(" ");
