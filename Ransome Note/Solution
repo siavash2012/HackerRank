@@ -1,0 +1,50 @@
+import java.io.*;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
+/* Code implemented by Siavash Khalaj (contactsiavash@gmail.com) */
+
+class Result {
+
+    /*
+     * Complete the 'checkMagazine' function below.
+     *
+     * The function accepts following parameters:
+     *  1. STRING_ARRAY magazine
+     *  2. STRING_ARRAY note
+     */
+
+    public static void checkMagazine(List<String> magazine, List<String> note) {
+    // Write your code here
+    Map<String,Long> magazineMap=magazine.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+    Map<String,Long> noteMap=note.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+    boolean matches=noteMap.entrySet().stream().allMatch(
+        entry->entry.getValue()<=(magazineMap.getOrDefault(entry.getKey(),0l)));
+    System.out.println(matches?"Yes":"No");
+
+    }
+
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        String[] firstMultipleInput = bufferedReader.readLine().replaceAll("\\s+$", "").split(" ");
+
+        int m = Integer.parseInt(firstMultipleInput[0]);
+
+        int n = Integer.parseInt(firstMultipleInput[1]);
+
+        List<String> magazine = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+            .collect(Collectors.toList());
+
+        List<String> note = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+            .collect(Collectors.toList());
+
+        Result.checkMagazine(magazine, note);
+
+        bufferedReader.close();
+    }
+}
