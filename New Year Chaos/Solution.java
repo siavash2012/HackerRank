@@ -34,6 +34,7 @@ class Result {
         }
         System.out.println(numBribes);
     }
+}
 
 
 public class Solution {
