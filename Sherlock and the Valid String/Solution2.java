@@ -24,21 +24,19 @@ class Result {
                 });
 
         countStringMap=stringCountMap.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, e->new ArrayList<>(Arrays.asList(e.getKey())),(v1, v2)->{v1.addAll(v2);return v1;}));
-        Map<Integer,List<String>> newCountStringMap=countStringMap.entrySet().stream().filter(e->! e.getValue().isEmpty()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        if(newCountStringMap.size()==1) return "YES";
-        if(newCountStringMap.size()>2) return "NO";
-        TreeMap<Integer,List<String>> treeMap=new TreeMap<>(newCountStringMap);
+        if(countStringMap.size()==1) return "YES";
+        if(countStringMap.size()>2) return "NO";
+        TreeMap<Integer,List<String>> treeMap=new TreeMap<>(countStringMap);
         Map.Entry<Integer,List<String>> first=treeMap.firstEntry();
         Map.Entry<Integer,List<String>> second=treeMap.lastEntry();
         if(first.getKey()==1 && first.getValue().size()==1)return "YES";
         if(second.getKey()-first.getKey() >1)return "NO";
         if(first.getValue().size()==1 || second.getValue().size()==1)return "YES";
         return "NO";
-
     }
 }
 
-public class Solution2 {
+public class Solution {
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String s = bufferedReader.readLine();
