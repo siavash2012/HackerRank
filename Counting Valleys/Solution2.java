@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.concurrent.atomic.*;
 
-*/ Code implemented by Siavash Khalaj (contactsiavash@gmail.com) */
+/* Code implemented by Siavash Khalaj (contactsiavash@gmail.com) */
 
 class Result {
 
