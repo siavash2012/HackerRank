@@ -1,8 +1,7 @@
 import java.io.*;
 import java.util.concurrent.atomic.*;
-import java.util.*;
 
-/* Code implemented by Siavash Khalaj (contactsiavash@gmail.com) */
+*/ Code implemented by Siavash Khalaj (contactsiavash@gmail.com) */
 
 class Result {
 
@@ -17,21 +16,17 @@ class Result {
 
     public static int countingValleys(int steps, String path) {
     // Write your code here
+    AtomicInteger seaLevel=new AtomicInteger();
     AtomicInteger valleys=new AtomicInteger();
-    LinkedList<Character> stack=new LinkedList<>();
     path.chars().map(e->(char)e).forEach(
         e->{
-            Character last=stack.peekLast();
-        if(last != null && last.equals('D') && e=='U'){
-            if(stack.equals(new LinkedList<>(Arrays.asList('D')))){
-                valleys.getAndIncrement();
+            if (e=='D'){
+                seaLevel.getAndDecrement();
             }
-            stack.pollLast();
-        }else if(last != null && last.equals('U') && e=='D'){
-            stack.pollLast();
-        }else{
-            stack.addLast((char) e);
-        }
+            else if(e=='U'){
+                if(seaLevel.get()==-1) valleys.getAndIncrement();
+                seaLevel.getAndIncrement();
+            }
         }
     );
     return valleys.get();
