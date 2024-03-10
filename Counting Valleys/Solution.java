@@ -18,7 +18,7 @@ class Result {
     public static int countingValleys(int steps, String path) {
         // Write your code here
         AtomicInteger valleys = new AtomicInteger();
-        LinkedList < Character > stack = new LinkedList <> ();
+        LinkedList <Character> stack = new LinkedList <> ();
         path.chars().map(e -> (char) e).forEach(
             e -> {
                 Character last = stack.peekLast();
