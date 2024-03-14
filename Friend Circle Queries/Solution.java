@@ -1,11 +1,10 @@
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
 /* Code implemented by Siavash Khalaj (contactsiavash@gmail.com) */
 
 public class Solution{
-
-    static int max=Integer.MIN_VALUE;
 
     static int find(int i, Map < Integer, Integer > nodeParentMap) {
         if (nodeParentMap.get(i) == i) {
@@ -17,7 +16,7 @@ public class Solution{
         }
     }
 
-    public static void unionBySize(int i, int j, Map < Integer, Integer > nodeParentMap, Map < Integer, Integer > sizeMap) {
+    public static void unionBySize(int i, int j, Map < Integer, Integer > nodeParentMap, Map < Integer, Integer > sizeMap,AtomicInteger max) {
         int iRep = find(i, nodeParentMap);
         int jRep = find(j, nodeParentMap);
         // If the elements are in the same set, no need to unite
@@ -34,7 +33,7 @@ public class Solution{
             nodeParentMap.put(iRep, jRep);
             // Increment j size by i size and update max
             sizeMap.put(jRep, sizeMap.get(jRep) + sizeMap.get(iRep));
-            if(sizeMap.get(jRep)>max)max=sizeMap.get(jRep);
+            if(sizeMap.get(jRep)>max.get())max.set(sizeMap.get(jRep));
         }
         // Else if j size is less than i size
         else {
@@ -42,13 +41,13 @@ public class Solution{
             nodeParentMap.put(jRep, iRep);
             // Increment i size by j size and update max
             sizeMap.put(iRep, sizeMap.get(iRep) + sizeMap.get(jRep));
-            if(sizeMap.get(iRep)>max)max=sizeMap.get(iRep);
+            if(sizeMap.get(iRep)>max.get())max.set(sizeMap.get(iRep));
         }
     }
 
 
     static int[] maxCircle(int[][] queries) {
-        max=Integer.MIN_VALUE;
+        AtomicInteger max=new AtomicInteger();
         Map < Integer, Integer > nodeParentMap = new HashMap < > ();
         Map < Integer, Integer > sizeMap = new HashMap < > ();
         int[] result = new int[queries.length];
@@ -59,21 +58,21 @@ public class Solution{
                 nodeParentMap.put(k, j);
                 nodeParentMap.put(j, j);
                 sizeMap.put(j, sizeMap.getOrDefault(j, 0) + 2);
-                if(sizeMap.get(j)>max)max=sizeMap.get(j);
+                if(sizeMap.get(j)>max.get())max.set(sizeMap.get(j));
             } else if (nodeParentMap.get(j) != null && nodeParentMap.get(k) == null) {
                 int parent = find(j, nodeParentMap);
                 nodeParentMap.put(k, parent);
                 sizeMap.put(parent, sizeMap.get(parent) + 1);
-                if(sizeMap.get(parent)>max)max=sizeMap.get(parent);
+                if(sizeMap.get(parent)>max.get())max.set(sizeMap.get(parent));
             } else if (nodeParentMap.get(j) == null && nodeParentMap.get(k) != null) {
                 int parent = find(k, nodeParentMap);
                 nodeParentMap.put(j, parent);
                 sizeMap.put(parent, sizeMap.get(parent) + 1);
-                if(sizeMap.get(parent)>max)max=sizeMap.get(parent);
+                if(sizeMap.get(parent)>max.get())max.set(sizeMap.get(parent));
             } else if (nodeParentMap.get(j) != null && nodeParentMap.get(k) != null) {
-                unionBySize(j, k, nodeParentMap, sizeMap);
+                unionBySize(j, k, nodeParentMap, sizeMap,max);
             }
-            result[i] = max;
+            result[i] = max.get();
         }
         return result;
     }
