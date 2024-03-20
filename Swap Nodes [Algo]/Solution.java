@@ -107,7 +107,7 @@ class Result {
     public static List<List<Integer>> swapNodes(List<List<Integer>> indexes, List<Integer> queries) {
         List<List<Integer>>result=new ArrayList<>();
         Map<Integer,List<List<Integer>>> depthMap=depthMap(indexes);
-        Map<Integer,List<List<Node>>> depthNodeMap=constructTree(depthMap);
+        Map<Integer,List<List<Node>>> depthNodeMap;
         int maxDepth=new TreeSet<>(depthMap.keySet()).last();
         Node root;
         List<List<Integer>> swapList=new ArrayList<>();
