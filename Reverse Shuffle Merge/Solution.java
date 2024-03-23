@@ -21,17 +21,17 @@ class Result {
         LinkedList < String > result = new LinkedList <> ();
         for (int i = sList.size() - 1; i >= 0; --i) {
             String current = sList.get(i);
+            String previous = result.peekLast();
             remainingCounts.computeIfPresent(current, (k, v) -> --v);
             if (result.isEmpty()) {
                 result.addLast(current);
                 currentCounts.computeIfPresent(current, (k, v) -> ++v);
                 currentCounts.putIfAbsent(current, 1L);
-            } else if (result.peekLast().compareTo(current) <= 0 && currentCounts.getOrDefault(current, 0L) < requiredCounts.get(current)) {
+            } else if (previous.compareTo(current) <= 0 && currentCounts.getOrDefault(current, 0L) < requiredCounts.get(current)) {
                 result.addLast(current);
                 currentCounts.computeIfPresent(current, (k, v) -> ++v);
                 currentCounts.putIfAbsent(current, 1L);
-            } else if (result.peekLast().compareTo(current) > 0 && currentCounts.getOrDefault(current, 0L) < requiredCounts.get(current)) {
-                String previous = result.peekLast();
+            } else if (previous.compareTo(current) > 0 && currentCounts.getOrDefault(current, 0L) < requiredCounts.get(current)) {
                 while (result.size() > 0 && previous.compareTo(current) > 0 && remainingCounts.get(previous) >= requiredCounts.get(previous) - currentCounts.get(previous) + 1) {
                     currentCounts.computeIfPresent(previous, (k, v) -> --v);
                     result.pollLast();
