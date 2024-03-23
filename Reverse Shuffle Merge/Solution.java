@@ -26,7 +26,6 @@ class Result {
                 result.addLast(current);
                 currentCounts.computeIfPresent(current, (k, v) -> ++v);
                 currentCounts.putIfAbsent(current, 1L);
-
             } else if (result.peekLast().compareTo(current) <= 0 && currentCounts.getOrDefault(current, 0L) < requiredCounts.get(current)) {
                 result.addLast(current);
                 currentCounts.computeIfPresent(current, (k, v) -> ++v);
