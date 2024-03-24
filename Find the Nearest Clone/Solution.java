@@ -20,20 +20,6 @@ class Node{
     public String toString(){
         return this.id+" "+this.color+" "+this.neighbors.size();
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Node node = (Node) o;
-        return id == node.id &&
-                color == node.color;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, color);
-    }
 }
 
 public class Solution{
@@ -74,8 +60,7 @@ public class Solution{
         }
         int min=Integer.MAX_VALUE;
         Set<Node> sourceSet=new HashSet<>();
-        Map<Integer,Node> nodeIdMap=Stream.concat(Arrays.stream(graphFrom).boxed(),Arrays.stream(graphTo).boxed()).map(i->new Node(i,ids[i-1])).collect(Collectors.toSet()).
-                stream().collect(Collectors.toMap(a->a.id,a->a));
+        Map<Integer,Node> nodeIdMap=Stream.concat(Arrays.stream(graphFrom).boxed(),Arrays.stream(graphTo).boxed()).collect(Collectors.toSet()).stream().map(i->new Node(i,ids[i-1])).collect(Collectors.toMap(a->a.id,a->a));
 
         for(int i=0;i<graphFrom.length;++i){
            nodeIdMap.get(graphFrom[i]).neighbors.add(nodeIdMap.get(graphTo[i]));
