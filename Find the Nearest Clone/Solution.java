@@ -6,16 +6,18 @@ import java.util.stream.Stream;
 /* Code implemented by Siavash Khalaj (contactsiavash@gmail.com) */
 class Node{
     boolean visited;
+    boolean usedAsSourceOrDestination;
     List<Node>neighbors;
     int id;
     long color;
     int count;
     public Node(int id,long color){
-        visited=false;
+        this.visited=false;
+        this.usedAsSourceOrDestination=false;
         this.id=id;
         this.color=color;
         this.count=0;
-        neighbors=new ArrayList<Node>();
+        this.neighbors=new ArrayList<Node>();
     }
     public String toString(){
         return this.id+" "+this.color+" "+this.neighbors.size();
@@ -28,6 +30,7 @@ public class Solution{
         LinkedList<Node> queue = new LinkedList<>();
         // Mark the current node as visited and enqueue it
         source.visited = true;
+        source.usedAsSourceOrDestination=true;
         queue.add(source);
 
         // Iterate over the queue
@@ -36,6 +39,7 @@ public class Solution{
             Node currentNode = queue.poll();
 
             if((!currentNode.equals(source)) && currentNode.color==val){
+                currentNode.usedAsSourceOrDestination=true;
                 return currentNode.count;
             }
 
@@ -50,7 +54,7 @@ public class Solution{
                 }
             }
         }
-        return 0;
+        return -1;
     }
 
     static int findShortest(int graphNodes, int[] graphFrom, int[] graphTo, long[] ids, int val) {
@@ -59,7 +63,7 @@ public class Solution{
             return -1;
         }
         int min=Integer.MAX_VALUE;
-        Set<Node> sourceSet=new HashSet<>();
+        List<Node> sourceList=new ArrayList<>();
         Map<Integer,Node> nodeIdMap=Stream.concat(Arrays.stream(graphFrom).boxed(),Arrays.stream(graphTo).boxed()).collect(Collectors.toSet()).stream().map(i->new Node(i,ids[i-1])).collect(Collectors.toMap(a->a.id,a->a));
 
         for(int i=0;i<graphFrom.length;++i){
@@ -71,19 +75,21 @@ public class Solution{
 
         for(Node node:nodes){
             if(node.color==val){
-                sourceSet.add(node);
+                sourceList.add(node);
             }
         }
 
-        for(Node source:sourceSet){
-            int count=BFS(source,val);
-            if(count<min){
+        for(Node source:sourceList){
+            if(! source.usedAsSourceOrDestination){
+                int count=BFS(source,val);
+            if(count<min && count!=-1){
                 min=count;
             }
             nodes.forEach(a->a.visited=false);
+            }  
         }
 
-        return min==0 ?-1:min;
+        return min==Integer.MAX_VALUE ?-1:min;
 
     }
 
