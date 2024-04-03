@@ -40,7 +40,7 @@ class Result {
             minPasses = Math.min(minPasses, pass + passesNeeded);
             if (passesNeeded == 0) break;
 
-            while (candiesMade < p) {
+            if (candiesMade < p) {
                 passesNeeded = Math.ceil((p - candiesMade) / candyRate);
                 pass += passesNeeded;
                 candiesMade += (passesNeeded * m * w);
