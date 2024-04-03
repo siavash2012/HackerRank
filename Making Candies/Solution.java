@@ -17,10 +17,10 @@ class Result {
 
     public static long minimumPasses(long m, long w, long p, long n) {
         // Write your code here
-        return (long) minimumPasses((double) m, (double) w, (double) p, (double) n);
+        return (long) minimumPasses((double) m, (double) w, p, n);
     }
 
-    public static double minimumPasses(double m, double w, double p, double n) {
+    public static double minimumPasses(double m, double w, long p, long n) {
         double pass = 0D;
         double candiesMade = 0D;
         double candyRate;
@@ -45,18 +45,23 @@ class Result {
                 pass += passesNeeded;
                 candiesMade += (passesNeeded * m * w);
             }
-            if (p <= candiesMade) {
-                double totalBuy = Math.floor(candiesMade / p);
-                candiesMade = candiesMade % p;
-                totalBuy += (m + w);
-                double half = Math.floor(totalBuy / 2);
-                if (m > w) {
-                    m = Math.max(m, half);
-                    w = totalBuy - m;
-                } else {
-                    w = Math.max(w, half);
-                    m = totalBuy - w;
-                }
+            double totalBuy = Math.floor(candiesMade / p);
+            candiesMade = candiesMade % p;
+            if (m < w) {
+                double temp = m;
+                m = w;
+                w = temp;
+            }
+            double diff = m - w;
+            if (totalBuy > diff) {
+                w += diff;
+                totalBuy -= diff;
+                double firstHalf = Math.floor(totalBuy / 2);
+                double secondHalf = totalBuy - firstHalf;
+                m += firstHalf;
+                w += secondHalf;
+            } else {
+                w += totalBuy;
             }
         }
         return minPasses;
