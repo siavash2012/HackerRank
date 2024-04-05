@@ -15,7 +15,7 @@ class Result {
 
     public static int superDigit(String n, int k) {
     // Write your code here
-    if(n.length()==1)return Integer.valueOf(n);
+    if(n.length()==1)return Integer.valueOf(n)*k;
     long sum=Arrays.stream(n.split("")).mapToLong(Long::valueOf).sum()*k;
     return superDigit(String.valueOf(sum),1);
     }
