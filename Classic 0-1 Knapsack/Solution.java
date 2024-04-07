@@ -40,15 +40,11 @@ public class Solution {
         }
         return dp;
     }
+    
 
     /* Function for finding the actual items which can be included in the knapsack (not required for this challenge) */
-    public static List < Item > findItems(int[][] dp, List < Item > itemList) {
-        List < Item > includedItemList = new ArrayList < > ();
-        findItemsHelper(dp, itemList, includedItemList);
-        return includedItemList;
-    }
-
-    public static void findItemsHelper(int[][] dp, List < Item > itemList, List < Item > includedItemList) {
+    public static List<Item> findItems(int[][] dp, List < Item > itemList) {
+        List < Item > includedItemList=new ArrayList<>();
         int row = dp.length - 1;
         int column = dp[row].length - 1;
         while (row >= 1) {
@@ -58,6 +54,7 @@ public class Solution {
             }
             --row;
         }
+        return includedItemList;
     }
 
     public static void main(String[] args) throws Exception {
@@ -77,7 +74,7 @@ public class Solution {
             }
             int[][] dp = solve(weightLimit, itemList);
             System.out.println(dp[itemList.size()][weightLimit]);
-            // System.out.println(findItems(dp,itemList));
+            //System.out.println(findItems(dp,itemList));
         }
     }
 }
