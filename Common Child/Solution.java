@@ -35,6 +35,39 @@ class Result {
         }
         return dp[s1.length()][s2.length()];
     }
+
+     /* Function for finding the actual longest common subsequence (not required for this challnege) */
+    public static String commonChildString(String s1, String s2) {
+        // Write your code here
+        int[][] dp = new int[s1.length() + 1][s2.length() + 1];
+        for (int i = 1; i < dp.length; ++i) {
+            for (int j = 1; j < dp[i].length; ++j) {
+                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        StringBuilder commonChildString = new StringBuilder();
+        int row = dp.length - 1;
+        int column = dp[row].length - 1;
+        while (true) {
+            if (row == 0 || column == 0) break;
+            if (s1.charAt(row - 1) == s2.charAt(column - 1)) {
+                commonChildString.append(s1.charAt(row - 1));
+                --row;
+                --column;
+            } else if (dp[row][column - 1] > dp[row - 1][column]) {
+                --column;
+            } else {
+                --row;
+            }
+        }
+        return commonChildString.reverse().toString();
+    }
+    
 }
 
 public class Solution {
@@ -53,5 +86,6 @@ public class Solution {
 
         bufferedReader.close();
         bufferedWriter.close();
+        //System.out.println(Result.commonChildString(s1,s2));
     }
 }
