@@ -18,70 +18,52 @@ class Result {
      * The function is expected to return a STRING.
      * The function accepts INTEGER year as parameter.
      */
-     
-     public static boolean isLeap(int year,boolean gregorian){
-         if(gregorian){
-             if((year%4==0 && year%100!=0)||(year%400==0)){
-                 return true;
-             }else{
-                 return false;
-             }
-         }else{
-             if(year%4==0){
-                 return true;
-             }else{
-                 return false;
-             }
-         }
-     }
-     
-     /* The function below converts day of the year to date in gregorian and Juilan calender systems, including the year 1918 when the calender was transitioned in Russia */ 
 
-    public static String dayOfProgrammer(int year,int day) {
-        
-    List<Integer>monthsN=List.of(31,28,31,30,31,30,31,31,30,31,30,31);
-    List<Integer>monthsL=List.of(31,29,31,30,31,30,31,31,30,31,30,31);
-    List<Integer>monthsT=List.of(31,15,31,30,31,30,31,31,30,31,30,31);
-    int index=0;
-    boolean transitionMonth=false;
-    if(year==1918 && 32<=day && day<=46){
-        transitionMonth=true;
-    }
-    
-    boolean gregorian=year<=1917?false:true;
-    if(isLeap(year,gregorian)==false &&year!=1918){
-        while(true){
-            if(day<=monthsN.get(index)){
-                break;
+    public static boolean isLeap(int year, boolean gregorian) {
+        if (gregorian) {
+            if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+                return true;
+            } else {
+                return false;
             }
-            day-=monthsN.get(index);
-            ++index;
-        }
-        
-    }else if(isLeap(year,gregorian)&& year!=1918){
-        while(true){
-             if(day<=monthsL.get(index)){
-                break;
+        } else {
+            if (year % 4 == 0) {
+                return true;
+            } else {
+                return false;
             }
-            day-=monthsL.get(index);
-            ++index;
-        }
-    }else if(year==1918){
-        while(true){
-             if(day<=monthsT.get(index)){
-                break;
-            }
-            day-=monthsT.get(index);
-            ++index;
         }
     }
-    if(transitionMonth){
-        day+=13;
-    }
-        
-    ++index;
-    String month=index<10?"0"+String.valueOf(index):String.valueOf(index);
-    return day+"."+month+"."+year;
+
+    /* The function below converts day of the year to date in gregorian and Juilan calender systems, including the year 1918 when the calender was transitioned in Russia */
+
+    public static String dayOfProgrammer(int year, int day) {
+
+        List < Integer > months = Arrays.asList(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+        int index = 0;
+        boolean transitionMonth = false;
+        if (year == 1918 && 32 <= day && day <= 46) {
+            transitionMonth = true;
+        }
+        boolean gregorian = year <= 1917 ? false : true;
+        boolean isLeap = isLeap(year, gregorian);
+        if (year == 1918) {
+            months.set(1, months.get(1) - 13);
+        } else if (isLeap) {
+            months.set(1, months.get(1) + 1);
+        }
+        while (day > months.get(index)) {
+            day -= months.get(index);
+            ++index;
+        }
+
+        if (transitionMonth) {
+            day += 13;
+        }
+
+        ++index;
+        String month = index < 10 ? "0" + String.valueOf(index) : String.valueOf(index);
+        return day + "." + month + "." + year;
 
     }
 }
@@ -93,7 +75,7 @@ public class Solution {
 
         int year = Integer.parseInt(bufferedReader.readLine().trim());
 
-        String result = Result.dayOfProgrammer(year,256);
+        String result = Result.dayOfProgrammer(year, 256);
 
         bufferedWriter.write(result);
         bufferedWriter.newLine();
@@ -102,4 +84,3 @@ public class Solution {
         bufferedWriter.close();
     }
 }
- 
