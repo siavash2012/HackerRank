@@ -27,8 +27,8 @@ class Result {
     int dose=0;
     for(int n:height){
         max=Math.max(max,n);
-        dose=max-k;
     }
+    dose=max-k;
     return Math.max(0,dose);
 
     }
