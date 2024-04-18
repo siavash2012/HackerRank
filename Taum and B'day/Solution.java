@@ -26,8 +26,8 @@ class Result {
 
     public static long taumBday(int b, int w, int bc, int wc, int z) {
     // Write your code here
-    long wcMin=Math.min(wc+0L,bc+z);
-    long bcMin=Math.min(bc+0L,wc+z);
+    long wcMin=Math.min(wc,bc+z);
+    long bcMin=Math.min(bc,wc+z);
     return b*bcMin+w*wcMin;
     }
 }
