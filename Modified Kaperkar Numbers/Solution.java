@@ -29,8 +29,7 @@ class Result {
      }
 
     public static void kaprekarNumbers(int p, int q) {
-    var list=IntStream.rangeClosed(p,q).filter(Result::isKaprekar).boxed().collect(Collectors.toList());
-    Collections.sort(list);
+    var list=IntStream.rangeClosed(p,q).filter(Result::isKaprekar).sorted().boxed().collect(Collectors.toList());
     String result=list.stream().map(e->String.valueOf(e)).collect(Collectors.joining(" "));
     System.out.println(list.size()>0?result:"INVALID RANGE");
     }
