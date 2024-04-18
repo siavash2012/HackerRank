@@ -10,33 +10,32 @@ import java.util.stream.*;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
+
 /* Code implemented by Siavash Khalaj (contactsiavash@gmail.com) */
 
 class Result {
-
+    
     /*
      * Complete the 'strangeCounter' function below.
      *
      * The function is expected to return a LONG_INTEGER.
      * The function accepts LONG_INTEGER t as parameter.
      */
-
+    
     public static long strangeCounter(long t) {
     // Write your code here
-    long start=3;
-    long time=1;
+    long cycleStartCounter=3;
+    long cycleStartTime=1;
     long total=0;
     while(true){
-        total+=start;
+        total+=cycleStartCounter;
         if(total>=t)break;
-        time+=start;
-        start*=2;
+        cycleStartTime+=cycleStartCounter;
+        cycleStartCounter*=2;
     }
-    long remainder=t-time;
-    return  start-remainder;
-   
+    long remainder=t-cycleStartTime;
+    return  cycleStartCounter-remainder;
     }
-
 }
 
 public class Solution {
