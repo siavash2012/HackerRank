@@ -30,7 +30,7 @@ class Result {
             if((s.substring(0,i)+s.substring(i+1)).equals(reverse.substring(0,s.length()-i-1)+reverse.substring(s.length()-i))){
                 return i;
             }
-            else if((reverse.substring(0,i)+reverse.substring(i+1)).equals(s.substring(0,s.length()-i-1)+s.substring(s.length()-i))){
+            if((reverse.substring(0,i)+reverse.substring(i+1)).equals(s.substring(0,s.length()-i-1)+s.substring(s.length()-i))){
                 return s.length()-i-1;
             }
         }
