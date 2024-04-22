@@ -26,7 +26,7 @@ class Result {
     List<Integer>sums=new ArrayList<>();
     for(int i=0;i<s.length();++i){
         char c=s.charAt(i);
-        int w=c-96;
+        int w=c-'a'+1;
         int j=i;
         StringBuilder sb=new StringBuilder();
         while(j<s.length() && s.charAt(j)==c){
@@ -36,6 +36,7 @@ class Result {
         }
         i=j-1;
     }
+    
     return queries.stream().map(a->sums.contains(a)?"Yes":"No").collect(Collectors.toList());
     }
 
