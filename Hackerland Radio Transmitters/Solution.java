@@ -33,14 +33,13 @@ class Result {
             var mid=x.get(i)+k;
             var midIndex=Collections.binarySearch(x,mid);
             if(midIndex<0)midIndex=-midIndex-2;
-            var j=midIndex;
-            while(midIndex+1<x.size()&& x.get(j).equals(x.get(midIndex+1)))++midIndex;
             var last=x.get(midIndex)+k;
             var lastIndex=Collections.binarySearch(x,last);
             if(lastIndex<0)lastIndex=-lastIndex-2;
-            j=lastIndex;
+            var j=lastIndex;
             while(lastIndex+1<x.size()&& x.get(j).equals(x.get(lastIndex+1)))++lastIndex;
             i=lastIndex+1;
+        
     }
     return count;
     
